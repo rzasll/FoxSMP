@@ -1,0 +1,2 @@
+# FoxSMP
+website FoxSMP
