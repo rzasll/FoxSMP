@@ -572,8 +572,9 @@
         const closeTutorialButtons = document.querySelectorAll('.close-tutorial');
         const tutorialDetails = document.querySelectorAll('.tutorial-detail');
 
+        // Mengubah logika tombol titik tiga menjadi toggle
         navToggle.addEventListener('click', () => {
-            navMenu.classList.add('active');
+            navMenu.classList.toggle('active');
         });
 
         closeBtn.addEventListener('click', () => {
@@ -585,31 +586,20 @@
                 event.preventDefault();
                 const targetPageId = event.target.getAttribute('data-page');
                 
-                const currentPage = document.querySelector('.page.active');
-                if (currentPage) {
-                    currentPage.style.opacity = '0';
-                    currentPage.style.pointerEvents = 'none';
-                    currentPage.style.overflowY = 'hidden';
-                }
-
-                tutorialDetails.forEach(detail => {
-                    detail.classList.remove('active');
+                // Menghapus kelas 'active' dari semua halaman
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                    page.classList.remove('page-enter');
                 });
 
-                setTimeout(() => {
-                    pages.forEach(page => {
-                        page.classList.remove('active');
-                        page.classList.remove('page-enter');
-                    });
+                // Menambahkan kelas 'active' dan 'page-enter' hanya ke halaman yang dituju
+                const newPage = document.getElementById(targetPageId);
+                if (newPage) {
+                    newPage.classList.add('active');
+                    newPage.classList.add('page-enter');
+                }
 
-                    const newPage = document.getElementById(targetPageId);
-                    if (newPage) {
-                        newPage.classList.add('active');
-                        newPage.classList.add('page-enter');
-                        newPage.style.overflowY = 'auto';
-                    }
-                }, 500);
-
+                // Sembunyikan menu navigasi
                 navMenu.classList.remove('active');
             });
         });
