@@ -16,14 +16,175 @@
 html, body {
     height: 100%;
     width: 100%;
-    overflow: hidden;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
     color: var(--light-color);
     line-height: 1.6;
-    background-color: var(--dark-color);
+    background: linear-gradient(-45deg, #1a1a2e, #273b5b, #1e3a4e, #2c4a6a);
+    background-size: 400% 400%;
+    animation: backgroundGradient 10s ease infinite;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+}
+
+header .logo-container {
+    display: flex;
+    align-items: center;
+}
+
+header .logo-container img {
+    /* Ukuran logo yang lebih besar */
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    margin-right: 10px;
+}
+
+header .logo-container h1 {
+    /* Mengganti font menjadi Montserrat */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    line-height: 1;
+}
+
+header h1 span:first-child { color: yellow; }
+header h1 span:last-child { color: #3a86ff; }
+        
+.nav-toggle {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: var(--light-color);
+    cursor: pointer;
+}
+
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 1500;
+}
+
+.nav-menu.active {
+    right: 0;
+}
+
+.nav-menu ul {
+    list-style: none;
+    text-align: center;
+}
+
+.nav-menu ul li {
+    margin: 2rem 0;
+    transform: translateX(200%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.nav-menu.active ul li {
+    transform: translateX(0);
+}
+
+.nav-menu ul li:nth-child(1) { transition-delay: 0.1s; }
+.nav-menu ul li:nth-child(2) { transition-delay: 0.2s; }
+.nav-menu ul li:nth-child(3) { transition-delay: 0.3s; }
+.nav-menu ul li:nth-child(4) { transition-delay: 0.4s; }
+
+.nav-menu ul li a {
+    color: var(--dark-color);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.nav-menu ul li a:hover {
+    color: var(--secondary-color);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: var(--dark-color);
+    cursor: pointer;
+}
+
+main {
+    padding-top: 8rem;
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8rem 2rem 4rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+    overflow-y: auto;
+}
+
+.page.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.page-enter {
+    animation: slideIn 0.8s forwards;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.page-content-animated {
+    animation: fadeInAndUp 1s forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+}
+
+@keyframes fadeInAndUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .background-image {
@@ -32,7 +193,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Pastikan nama file ini sama persis dengan nama file di repositori GitHub Anda */
     background-image: url('IMG-20250818-WA0049.jpg');
     background-size: cover;
     background-position: center;
@@ -40,63 +200,18 @@ body {
     z-index: -1;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100vh;
-    padding: 2rem;
-    text-align: center;
-}
-
-header {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 2rem;
-}
-
-header .logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-}
-
-header .logo-container img {
-    width: 60px;
-    height: auto;
-    border-radius: 50%;
-    border: 2px solid var(--primary-color);
-}
-
-header .logo-container h1 {
-    font-family: 'Roboto Mono', monospace;
-    font-size: 2rem;
-    line-height: 1;
-    margin-top: 0.5rem;
-}
-
-header h1 span:first-child { color: yellow; }
-header h1 span:last-child { color: #3a86ff; }
-
-.main-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .welcome-text {
-    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
     font-weight: bold;
-    color: var(--light-color);
+    color: var(--accent-color);
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
+    margin-bottom: 0.5rem;
 }
 
 .cta-btn {
@@ -110,6 +225,7 @@ header h1 span:last-child { color: #3a86ff; }
     text-transform: uppercase;
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 2rem;
 }
 
 .cta-btn:hover {
@@ -126,31 +242,71 @@ header h1 span:last-child { color: #3a86ff; }
     word-wrap: break-word;
 }
 
-.nav-menu {
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1.5rem;
     position: relative;
-    width: 100%;
-    padding-bottom: 2rem;
-}
-
-.nav-menu ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.nav-menu ul li a {
-    color: var(--light-color);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-    border-bottom: 2px solid transparent;
-    padding-bottom: 0.25rem;
-}
-
-.nav-menu ul li a:hover {
+    display: inline-block;
     color: var(--accent-color);
-    border-bottom: 2px solid var(--accent-color);
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    height: 4px;
+    background-color: var(--secondary-color);
+    bottom: -10px;
+    animation: underline 1s forwards;
+    animation-delay: 1s;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+ul li {
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+ul li:hover {
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes backgroundGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-top: 2rem;
 }
