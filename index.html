@@ -322,6 +322,102 @@
                 margin: 0 auto;
             }
         }
+        
+        /* Gaya untuk tombol 'Klik Selengkapnya' */
+        .more-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .more-btn:hover {
+            background-color: #316eb7;
+        }
+
+        /* Gaya untuk Halaman Detail Tutorial (Popup) */
+        .tutorial-detail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .tutorial-detail.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .tutorial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem;
+            max-width: 800px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            color: var(--light-color);
+            text-align: left;
+        }
+
+        .tutorial-card h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .tutorial-card p {
+            margin-bottom: 1rem;
+        }
+
+        .tutorial-card ul {
+            margin-bottom: 1rem;
+            padding-left: 20px;
+        }
+
+        .close-tutorial {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--light-color);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Rasio 16:9 */
+            height: 0;
+            margin-top: 2rem;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -361,14 +457,17 @@
                 <div class="card page-content-animated">
                     <h3>Cara Masuk Server</h3>
                     <p>Buka Minecraft, pilih Multiplayer, lalu 'Add Server'. Masukkan IP di atas dan klik 'Done'.</p>
+                    <button class="more-btn" data-target="tutorial-masuk">Klik Selengkapnya</button>
                 </div>
                 <div class="card page-content-animated">
                     <h3>Cara Claim Land</h3>
                     <p>Setelah masuk, gunakan kapak emas untuk menandai sudut-sudut area yang ingin Anda lindungi.</p>
+                    <button class="more-btn" data-target="tutorial-claim">Klik Selengkapnya</button>
                 </div>
                 <div class="card page-content-animated">
                     <h3>Cara Mengatasi Lag</h3>
                     <p>Pastikan Anda menggunakan versi Minecraft yang direkomendasikan dan kurangi pengaturan grafis di game.</p>
+                    <button class="more-btn" data-target="tutorial-lag">Klik Selengkapnya</button>
                 </div>
             </div>
         </section>
@@ -406,12 +505,72 @@
         </section>
     </main>
 
+    <div id="tutorial-masuk" class="tutorial-detail">
+        <div class="tutorial-card">
+            <span class="close-tutorial">&times;</span>
+            <h3>Tutorial: Cara Masuk Server</h3>
+            <p>1. Buka Minecraft, pastikan versi Anda sesuai dengan server kami. Biasanya, kami mendukung versi terbaru. Untuk hasil terbaik, gunakan Java Edition. </p>
+            <p>2. Di menu utama, pilih 'Multiplayer'.</p>
+            <p>3. Klik tombol 'Add Server'.</p>
+            <p>4. Masukkan **node.adhost3.liteserver.my.id:25004** pada kolom 'Server Address'. Anda bisa beri nama server sesuai keinginan Anda, misalnya 'FoxSMP'.</p>
+            <p>5. Klik 'Done' dan server akan muncul di daftar Anda. Selamat bermain!</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="caramasukserver.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <div id="tutorial-claim" class="tutorial-detail">
+        <div class="tutorial-card">
+            <span class="close-tutorial">&times;</span>
+            <h3>Tutorial: Cara Claim Land</h3>
+            <p>1. Setelah Anda bergabung di server, Anda akan diberikan kapak emas di inventaris Anda. Kapak ini adalah alat utama untuk mengklaim lahan. Jika Anda tidak memilikinya, Anda bisa mendapatkannya dengan mengetik perintah `/kit claim` atau meminta bantuan staf.</p>
+            <p>2. Pilih area yang ingin Anda klaim. Area minimum biasanya 10x10 blok. </p>
+            <p>3. Klik kanan di salah satu sudut area yang Anda inginkan dengan kapak emas.</p>
+            <p>4. Kemudian, pergi ke sudut yang berlawanan dan klik kanan lagi. Pastikan Anda melihat pesan konfirmasi di chat.</p>
+            <p>5. Selesai! Lahan Anda sekarang terlindungi. Anda juga bisa menambahkan teman dengan perintah `/trust [nama-pemain]`.</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="caraclaimland.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tutorial-lag" class="tutorial-detail">
+        <div class="tutorial-card">
+            <span class="close-tutorial">&times;</span>
+            <h3>Tutorial: Cara Mengatasi Lag</h3>
+            <p>Lag bisa sangat mengganggu. Berikut beberapa tips untuk meminimalisirnya:</p>
+            <ul>
+                <li>Kurangi pengaturan grafis di game, seperti render distance dan efek partikel.</li>
+                <li>Pastikan koneksi internet Anda stabil. Gunakan koneksi kabel jika memungkinkan.</li>
+                <li>Tutup aplikasi atau program lain yang berjalan di latar belakang saat bermain.</li>
+                <li>Jika Anda menggunakan mod, pastikan mod tersebut kompatibel dan tidak membebani performa.</li>
+                <li>Pastikan versi Minecraft yang Anda gunakan adalah versi yang direkomendasikan server kami.</li>
+            </ul>
+            <div class="video-container">
+                <video controls>
+                    <source src="caramengatasilag.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+        </div>
+    </div>
+
     <script>
         const navToggle = document.getElementById('nav-toggle');
         const navMenu = document.getElementById('nav-menu');
         const closeBtn = document.getElementById('close-btn');
         const navLinks = document.querySelectorAll('.nav-menu a');
         const pages = document.querySelectorAll('.page');
+        const moreButtons = document.querySelectorAll('.more-btn');
+        const closeTutorialButtons = document.querySelectorAll('.close-tutorial');
+        const tutorialDetails = document.querySelectorAll('.tutorial-detail');
 
         navToggle.addEventListener('click', () => {
             navMenu.classList.add('active');
@@ -433,6 +592,10 @@
                     currentPage.style.overflowY = 'hidden';
                 }
 
+                tutorialDetails.forEach(detail => {
+                    detail.classList.remove('active');
+                });
+
                 setTimeout(() => {
                     pages.forEach(page => {
                         page.classList.remove('active');
@@ -452,6 +615,25 @@
         });
 
         document.getElementById('home').classList.add('active');
+
+        moreButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const targetId = event.target.getAttribute('data-target');
+                const targetDetail = document.getElementById(targetId);
+                if (targetDetail) {
+                    targetDetail.classList.add('active');
+                }
+            });
+        });
+
+        closeTutorialButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const parentDetail = button.closest('.tutorial-detail');
+                if (parentDetail) {
+                    parentDetail.classList.remove('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
