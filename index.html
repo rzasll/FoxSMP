@@ -7,7 +7,322 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #3a86ff;
+            --dark-color: #1a1a2e;
+            --light-color: #e0f2f1;
+            --accent-color: #ffd700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--light-color);
+            line-height: 1.6;
+            background: linear-gradient(-45deg, #1a1a2e, #273b5b, #1e3a4e, #2c4a6a);
+            background-size: 400% 400%;
+            animation: backgroundGradient 10s ease infinite;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+        }
+
+        header .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo-container img {
+            width: 40px;
+            height: auto;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            margin-right: 10px;
+        }
+
+        header .logo-container h1 {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            line-height: 1;
+        }
+
+        header h1 span:first-child { color: yellow; }
+        header h1 span:last-child { color: #3a86ff; }
+        
+        .nav-toggle {
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: var(--light-color);
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 1500;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .nav-menu ul li {
+            margin: 2rem 0;
+            transform: translateX(200%);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .nav-menu.active ul li {
+            transform: translateX(0);
+        }
+
+        .nav-menu ul li:nth-child(1) { transition-delay: 0.1s; }
+        .nav-menu ul li:nth-child(2) { transition-delay: 0.2s; }
+        .nav-menu ul li:nth-child(3) { transition-delay: 0.3s; }
+        .nav-menu ul li:nth-child(4) { transition-delay: 0.4s; }
+
+        .nav-menu ul li a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--dark-color);
+            cursor: pointer;
+        }
+
+        main {
+            padding-top: 8rem;
+        }
+        
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .page-enter {
+            animation: slideIn 0.8s forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .page-content-animated {
+            animation: fadeInAndUp 1s forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        @keyframes fadeInAndUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .lobby-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            margin: 1.5rem auto;
+            display: block;
+        }
+
+        .welcome-text {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: bold;
+            color: var(--accent-color);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .under-image-text {
+            font-size: 1rem;
+            font-style: italic;
+            color: rgba(224, 242, 241, 0.8);
+            margin-top: 0.5rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .ip-address {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
+            color: var(--secondary-color);
+            margin-top: 1rem;
+            font-weight: bold;
+            word-wrap: break-word;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--accent-color);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            left: 25%;
+            height: 4px;
+            background-color: var(--secondary-color);
+            bottom: -10px;
+            animation: underline 1s forwards;
+            animation-delay: 1s;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        ul li {
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        ul li:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes backgroundGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Media Queries untuk tampilan Desktop */
+        @media (min-width: 768px) {
+            .page-content-animated {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -46,17 +361,14 @@
                 <div class="card page-content-animated">
                     <h3>Cara Masuk Server</h3>
                     <p>Buka Minecraft, pilih Multiplayer, lalu 'Add Server'. Masukkan IP di atas dan klik 'Done'.</p>
-                    <button class="more-btn" data-target="tutorial-masuk">Klik Selengkapnya</button>
                 </div>
                 <div class="card page-content-animated">
                     <h3>Cara Claim Land</h3>
                     <p>Setelah masuk, gunakan kapak emas untuk menandai sudut-sudut area yang ingin Anda lindungi.</p>
-                    <button class="more-btn" data-target="tutorial-claim">Klik Selengkapnya</button>
                 </div>
                 <div class="card page-content-animated">
                     <h3>Cara Mengatasi Lag</h3>
                     <p>Pastikan Anda menggunakan versi Minecraft yang direkomendasikan dan kurangi pengaturan grafis di game.</p>
-                    <button class="more-btn" data-target="tutorial-lag">Klik Selengkapnya</button>
                 </div>
             </div>
         </section>
@@ -94,63 +406,52 @@
         </section>
     </main>
 
-    <div id="tutorial-masuk" class="tutorial-detail">
-        <div class="tutorial-card">
-            <span class="close-tutorial">&times;</span>
-            <h3>Tutorial: Cara Masuk Server</h3>
-            <p>1. Buka Minecraft, pastikan versi Anda sesuai dengan server kami. Biasanya, kami mendukung versi terbaru. Untuk hasil terbaik, gunakan Java Edition. </p>
-            <p>2. Di menu utama, pilih 'Multiplayer'.</p>
-            <p>3. Klik tombol 'Add Server'.</p>
-            <p>4. Masukkan **node.adhost3.liteserver.my.id:25004** pada kolom 'Server Address'. Anda bisa beri nama server sesuai keinginan Anda, misalnya 'FoxSMP'.</p>
-            <p>5. Klik 'Done' dan server akan muncul di daftar Anda. Selamat bermain!</p>
-            <div class="video-container">
-                <video controls>
-                    <source src="caramasukserver.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                </video>
-            </div>
-        </div>
-    </div>
+    <script>
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const closeBtn = document.getElementById('close-btn');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        const pages = document.querySelectorAll('.page');
 
-    <div id="tutorial-claim" class="tutorial-detail">
-        <div class="tutorial-card">
-            <span class="close-tutorial">&times;</span>
-            <h3>Tutorial: Cara Claim Land</h3>
-            <p>1. Setelah Anda bergabung di server, Anda akan diberikan kapak emas di inventaris Anda. Kapak ini adalah alat utama untuk mengklaim lahan. Jika Anda tidak memilikinya, Anda bisa mendapatkannya dengan mengetik perintah `/kit claim` atau meminta bantuan staf.</p>
-            <p>2. Pilih area yang ingin Anda klaim. Area minimum biasanya 10x10 blok. </p>
-            <p>3. Klik kanan di salah satu sudut area yang Anda inginkan dengan kapak emas.</p>
-            <p>4. Kemudian, pergi ke sudut yang berlawanan dan klik kanan lagi. Pastikan Anda melihat pesan konfirmasi di chat.</p>
-            <p>5. Selesai! Lahan Anda sekarang terlindungi. Anda juga bisa menambahkan teman dengan perintah `/trust [nama-pemain]`.</p>
-            <div class="video-container">
-                <video controls>
-                    <source src="caraclaimland.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                </video>
-            </div>
-        </div>
-    </div>
-    
-    <div id="tutorial-lag" class="tutorial-detail">
-        <div class="tutorial-card">
-            <span class="close-tutorial">&times;</span>
-            <h3>Tutorial: Cara Mengatasi Lag</h3>
-            <p>Lag bisa sangat mengganggu. Berikut beberapa tips untuk meminimalisirnya:</p>
-            <ul>
-                <li>Kurangi pengaturan grafis di game, seperti render distance dan efek partikel.</li>
-                <li>Pastikan koneksi internet Anda stabil. Gunakan koneksi kabel jika memungkinkan.</li>
-                <li>Tutup aplikasi atau program lain yang berjalan di latar belakang saat bermain.</li>
-                <li>Jika Anda menggunakan mod, pastikan mod tersebut kompatibel dan tidak membebani performa.</li>
-                <li>Pastikan versi Minecraft yang Anda gunakan adalah versi yang direkomendasikan server kami.</li>
-            </ul>
-            <div class="video-container">
-                <video controls>
-                    <source src="caramengatasilag.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                </video>
-            </div>
-        </div>
-    </div>
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.add('active');
+        });
 
-    <script src="script.js"></script>
+        closeBtn.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetPageId = event.target.getAttribute('data-page');
+                
+                const currentPage = document.querySelector('.page.active');
+                if (currentPage) {
+                    currentPage.style.opacity = '0';
+                    currentPage.style.pointerEvents = 'none';
+                    currentPage.style.overflowY = 'hidden';
+                }
+
+                setTimeout(() => {
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                        page.classList.remove('page-enter');
+                    });
+
+                    const newPage = document.getElementById(targetPageId);
+                    if (newPage) {
+                        newPage.classList.add('active');
+                        newPage.classList.add('page-enter');
+                        newPage.style.overflowY = 'auto';
+                    }
+                }, 500);
+
+                navMenu.classList.remove('active');
+            });
+        });
+
+        document.getElementById('home').classList.add('active');
+    </script>
 </body>
 </html>
