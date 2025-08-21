@@ -16,7 +16,7 @@
 html, body {
     height: 100%;
     width: 100%;
-    overflow: hidden; /* Mencegah scroll pada body */
+    overflow: hidden;
 }
 
 body {
@@ -32,8 +32,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Menggunakan URL lengkap yang memastikan gambar bisa ditemukan */
-    background-image: url('https://raw.githubusercontent.com/rzasll/FoxSMP/main/IMG-20250818-WA0049.jpg');
+    /* Pastikan nama file ini sama persis dengan nama file di repositori GitHub Anda */
+    background-image: url('IMG-20250818-WA0049.jpg');
     background-size: cover;
     background-position: center;
     filter: brightness(50%) blur(2px);
