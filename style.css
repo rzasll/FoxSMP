@@ -15,7 +15,6 @@
 
 html, body {
     height: 100%;
-    width: 100%;
 }
 
 body {
@@ -56,7 +55,7 @@ header .logo-container img {
 }
 
 header .logo-container h1 {
-    /* Mengganti font menjadi Montserrat */
+    /* Menggunakan font Montserrat */
     font-family: 'Montserrat', sans-serif;
     font-size: 2rem;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
@@ -80,6 +79,7 @@ header h1 span:last-child { color: #3a86ff; }
     right: -100%;
     width: 100%;
     height: 100%;
+    /* Efek kaca buram (frosted glass) */
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     display: flex;
@@ -187,17 +187,14 @@ main {
     }
 }
 
-.background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
+.lobby-image {
     width: 100%;
-    height: 100%;
-    background-image: url('IMG-20250818-WA0049.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: brightness(50%) blur(2px);
-    z-index: -1;
+    max-width: 800px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    margin: 1.5rem auto;
+    display: block;
 }
 
 .container {
@@ -212,6 +209,13 @@ main {
     color: var(--accent-color);
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     margin-bottom: 0.5rem;
+}
+
+.under-image-text {
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(224, 242, 241, 0.8);
+    margin-top: 0.5rem;
 }
 
 .cta-btn {
@@ -298,6 +302,7 @@ ul li:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
+/* Animasi untuk efek gelombang */
 @keyframes backgroundGradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -309,4 +314,12 @@ footer {
     padding: 2rem 1rem;
     background-color: rgba(0, 0, 0, 0.2);
     margin-top: 2rem;
+}
+
+/* Media Queries untuk tampilan Desktop */
+@media (min-width: 768px) {
+    .page-content-animated {
+        max-width: 800px;
+        margin: 0 auto;
+    }
 }
